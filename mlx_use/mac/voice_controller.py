@@ -16,9 +16,15 @@ ACCESS_KEY = os.getenv('PICOVOICE_ACCESS_KEY')
 # Use the built-in 'stop' keyword or a custom .ppn file if you have one
 KEYWORDS = ['hey siri','stop']  # You can add more keywords if needed
 
+CUSTOM_KEYWORD_PATH = 'Hey-Mac_en_mac_v3_0_0.ppn'  # Adjust path if needed
+
 class VoiceMacController:
     def __init__(self):
-        self.porcupine = pvporcupine.create(access_key=ACCESS_KEY, keywords=[KEYWORDS[0], KEYWORDS[1]])
+        self.porcupine = pvporcupine.create(
+            access_key=ACCESS_KEY,
+            keyword_paths=[CUSTOM_KEYWORD_PATH],
+            keywords=['stop']
+        )
         self.recorder = PvRecorder(device_index=-1, frame_length=self.porcupine.frame_length)
         self.leopard = pvleopard.create(access_key=ACCESS_KEY)
         self.controller = Controller()
